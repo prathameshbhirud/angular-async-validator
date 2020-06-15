@@ -1,0 +1,70 @@
+<h3>Template-driven Form</h3>
+<p *ngIf="dataSaved && userForm.pristine" class = "success">
+	  User saved successfully.
+</p>
+<form #userForm="ngForm" (ngSubmit)="onFormSubmit(userForm)">
+  <table>
+	 <tr> 
+	   <td>Username:</td>
+	   <td> 
+	      <input name="username" required usernameExists ngModel #uname="ngModel">
+		    <div *ngIf="uname.dirty && uname.errors" class = "error"> 
+	        <div *ngIf="uname.errors.required"> 
+			       Username required.
+				  </div>	
+				  <div *ngIf="uname.errors.usernameExists"> 
+					 	 Username already exists.
+				  </div>	
+	      </div>
+	   </td>
+	 </tr> 
+	 <tr> 
+	   <td>Email:</td>
+	   <td> 
+	      <input name="email" required email emailExists ngModel #uemail="ngModel">
+		    <div *ngIf="uemail.dirty && uemail.errors" class = "error"> 
+					<div *ngIf="uemail.errors.required"> 
+					 	Email required.
+					</div>	
+	        <div *ngIf="uemail.errors.email"> 
+			      Email not valid.
+					</div>	
+					<div *ngIf="uemail.errors.emailExists"> 
+					  Email already exists.
+				  </div>	
+	      </div>
+	   </td>
+	 </tr> 	 
+	 <tr> 
+	    <td>Mobile Number:</td>
+	    <td> 
+				<input name="mobileNumber" required mobNumExists blackListedMobNum ngModel #mnumber="ngModel">
+		    <div *ngIf="mnumber.dirty && mnumber.errors" class = "error"> 
+	        <div *ngIf="mnumber.errors.required"> 
+						Mobile number required.
+		      </div>			   
+	        <div *ngIf="mnumber.errors.mobNumExists"> 
+						Mobile number already exists. 
+					</div>	
+					<div *ngIf="mnumber.errors.blackListedMobNum"> 
+						Black listed mobile number.
+		      </div>	
+	      </div>
+	    </td>
+	 </tr> 	 	 
+	 <tr> 	  
+	   <td colspan="2">
+	      <button [disabled]="userForm.invalid">Submit</button>
+	   </td>
+	 </tr>	   
+  </table>  
+</form>
+<h3>User Details: <button (click)="loadAllUsers()">Reload All Users</button></h3>
+<p *ngFor="let user of allUsers$ | async">
+	Id: <b>{{user.id}}</b> | User: <b>{{user.username}}</b> | 
+	     Email: <b>{{user.email}}</b> | Mobile: <b>{{user.mobileNumber}}</b>
+</p>
+<h3>Black Listed Mobile Numbers</h3>
+<p *ngFor="let item of allBlackListedMnums$ | async">
+	{{item['mobileNumber']}}
+</p>

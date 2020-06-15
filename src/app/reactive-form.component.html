@@ -1,0 +1,61 @@
+<h3>Reactive Form</h3>
+<p *ngIf="dataSaved && userForm.pristine" ngClass = "success">
+    User saved successfully.
+</p>
+<form [formGroup]="userForm" (ngSubmit)="onFormSubmit()">
+  <table>
+	 <tr> 
+	   <td>Username: </td>
+	   <td> 
+				<input formControlName="username">
+		    <div *ngIf="username.dirty && username.errors" class = "error"> 
+	        <div *ngIf="username.errors.required"> 
+			       Username required.
+				  </div>	
+				  <div *ngIf="username.errors.usernameExists"> 
+					 	 Username already exists.
+				  </div>	
+	      </div>
+	   </td>
+	 </tr> 
+	 <tr> 
+	   <td>Email: </td>
+	   <td> 
+	      <input formControlName="email">
+				<div *ngIf="email.dirty && email.errors" class = "error"> 
+					<div *ngIf="email.errors.required"> 
+					 	Email required.
+					</div>	
+	        <div *ngIf="email.errors.email"> 
+			      Email not valid.
+					</div>	
+					<div *ngIf="email.errors.emailExists"> 
+					  Email already exists.
+				  </div>	
+	      </div>	   
+	   </td>
+	 </tr> 	 
+	 <tr>
+	   <td>Mobile Number: </td>
+	   <td> 
+	      <input formControlName="mobileNumber">
+				<div *ngIf="mobileNumber.dirty && mobileNumber.errors" class = "error"> 
+	        <div *ngIf="mobileNumber.errors.required"> 
+						Mobile number required.
+		      </div>			   
+	        <div *ngIf="mobileNumber.errors.mobNumExists"> 
+						Mobile number already exists. 
+					</div>	
+					<div *ngIf="mobileNumber.errors.blackListedMobNum"> 
+						Black listed mobile number.
+		      </div>	
+	      </div>	   
+	   </td>
+	 </tr> 	 	 
+	 <tr> 	  
+	   <td colspan="2">
+	      <button [disabled]="userForm.invalid">Submit</button>
+	   </td>
+	 </tr>	   
+  </table>  
+</form>
